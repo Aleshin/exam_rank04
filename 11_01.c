@@ -6,11 +6,12 @@
 /*   By: saleshin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 18:44:34 by saleshin          #+#    #+#             */
-/*   Updated: 2025/01/11 20:09:48 by saleshin         ###   ########.fr       */
+/*   Updated: 2025/01/11 21:02:23 by saleshin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
+#include <string.h>
 
 void	err (char *str)
 {
@@ -35,9 +36,25 @@ int	cd (char **argv, int argc)
 
 int	main (int argc, char** argv, char** env)
 {
+	int	i = 0, j = 0;
 	(void)argc;
 	(void)env;
-	cd (argv, argc);
+	while (argv[i])
+	{
+		argv += i + 1;
+		i = 0;
+		while (argv[i] && strcmp (argv[i], "|") && strcmp (argv[i], ";"))
+			i++;
+		j = 0;
+		while (j < i)
+		{
+			err (*argv++);
+			err (" ");
+			j++;
+		}
+		err ("\n");
+	}
+//	cd (argv, argc);
 	return (0);
 }
 
